@@ -14,20 +14,21 @@ def main():
 			print str(count) + ' ' + key.key
 			file_dict[count] = key.key
 			count += 1
-		print "Select the file numbers (separated by commas) you want to download. Enter 0 for all files."
 		#set_trace()
-		ch = raw_input().split(",")
 		choices = []
-		for i in ch:
-			try:
-				choices.append(int(i))	
-			except:
-				print "Invalid input: " + i
-				pass
+		if argv[2] != '-all':
+			print "Select the file numbers (separated by commas) you want to download. Enter 0 for all files."
+			ch = raw_input().split(",")
+			for i in ch:
+				try:
+					choices.append(int(i))	
+				except:
+					print "Invalid input: " + i
+					pass
 		if ((len(choices) == 1) and (choices[0] == 0)) or (argv[2] == '-all'):
 			#Download all files
 			for key in mybucket.objects.all():
-				s3.meta.client.download_file(mybucket.name, key.key, './' + key.key + '.s3download')
+				s3.meta.client.download_file(mybucket.name, key.key, './' + key.key)
 				print key.key + ' downloaded successfully.'
 			print 'All files downloaded.'
 		else:
