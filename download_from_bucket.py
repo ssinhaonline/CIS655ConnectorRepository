@@ -15,7 +15,7 @@ def main():
 			file_dict[count] = key.key
 			count += 1
 		print "Select the file numbers (separated by commas) you want to download. Enter 0 for all files."
-		set_trace()
+		#set_trace()
 		ch = raw_input().split(",")
 		choices = []
 		for i in ch:
@@ -24,7 +24,7 @@ def main():
 			except:
 				print "Invalid input: " + i
 				pass
-		if (len(choices) == 1) and (choices[0] == 0):
+		if ((len(choices) == 1) and (choices[0] == 0)) or (argv[2] == '-all'):
 			#Download all files
 			for key in mybucket.objects.all():
 				s3.meta.client.download_file(mybucket.name, key.key, './' + key.key + '.s3download')
